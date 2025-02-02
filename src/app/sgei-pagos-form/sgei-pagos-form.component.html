@@ -1,0 +1,113 @@
+<div class="chip-grid-container">
+  <div style="display: flex;">
+    <div class="chip">
+      <mat-icon>schedule</mat-icon>
+      Entrada:
+    </div>
+    <mat-form-field style="margin-right: 10px;">
+      <mat-label>Fecha de Entrada</mat-label>
+      <input matInput [matDatepicker]="entryDatepicker" [(ngModel)]="entryDate">
+      <mat-datepicker #entryDatepicker></mat-datepicker>
+      <mat-datepicker-toggle [for]="entryDatepicker" matSuffix></mat-datepicker-toggle>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Hora de Entrada</mat-label>
+      <input matInput [matTimepicker]="entryTimepicker" [(ngModel)]="entryTime" >
+      <mat-timepicker #entryTimepicker></mat-timepicker>
+      <mat-timepicker-toggle [for]="entryTimepicker" matSuffix></mat-timepicker-toggle>
+    </mat-form-field>
+  </div>
+
+  <div style="display: flex; align-items: center; margin-top: 10px;">
+    <div class="chip">
+      <mat-icon>exit_to_app</mat-icon>
+      Salida:
+    </div>
+    <mat-form-field style="margin-right: 10px;">
+      <mat-label>Fecha de Salida</mat-label>
+      <input matInput [matDatepicker]="exitDatepicker" [(ngModel)]="exitDate">
+      <mat-datepicker #exitDatepicker></mat-datepicker>
+      <mat-datepicker-toggle [for]="exitDatepicker" matSuffix></mat-datepicker-toggle>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Hora de Salida</mat-label>
+      <input matInput [matTimepicker]="exitTimepicker" [(ngModel)]="exitTime">
+      <mat-timepicker #exitTimepicker></mat-timepicker>
+      <mat-timepicker-toggle [for]="exitTimepicker" matSuffix></mat-timepicker-toggle>
+    </mat-form-field>
+  </div>
+</div>
+<div class="chip-grid-container" style="margin-top: 10px; display: grid;">
+  <div class="chip" style="background-color: #1976d2; color: white;">
+    <mat-icon>schedule</mat-icon>
+    Tiempo Consumido: {{ timeDifference }} {{errorMessageTime ? '':'Hora(s)'}}
+  </div>
+  <div *ngIf="errorMessageTime" class="chip" style="background-color: red; color: white;">
+    <mat-icon>schedule</mat-icon>
+    {{errorMessageTime}}
+  </div>
+  <div class="chip" style="background-color: #388e3c; color: white; margin-top: 10px;">
+    <mat-icon>attach_money</mat-icon>
+    Valor a Pagar: {{ amountToPay | currency: 'USD':'symbol' }}
+  </div>
+</div>
+
+<div class="payment-form-container">
+  <h1>SGEI</h1>
+  <h2>Formulario de Pago</h2>
+  <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="payment-form">
+    <!-- Card Holder -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Titular de la tarjeta</mat-label>
+      <input matInput formControlName="cardHolder" />
+      <mat-error *ngIf="paymentForm.get('cardHolder')?.hasError('required')">
+        Titular de la Tarjeta es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Card Number -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Número de Tarjeta</mat-label>
+      <input matInput formControlName="cardNumber" maxlength="16" />
+      <mat-error *ngIf="paymentForm.get('cardNumber')?.hasError('required')">
+        Número de tarjeta es requerido
+      </mat-error>
+      <mat-error *ngIf="paymentForm.get('cardNumber')?.hasError('maxlength')">
+        El número de tarjeta debe ser de 16 dígitos
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Expiration Date -->
+    <mat-form-field appearance="outline" class="half-width">
+      <mat-label>Fecha de Expiración (MM/YY)</mat-label>
+      <input matInput formControlName="expirationDate" maxlength="5" />
+      <mat-error *ngIf="paymentForm.get('expirationDate')?.hasError('required')">
+        Fecha de Expiración es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <!-- CVV -->
+    <mat-form-field appearance="outline" class="half-width">
+      <mat-label>CVV</mat-label>
+      <input matInput formControlName="cvv" type="password" maxlength="3" />
+      <mat-error *ngIf="paymentForm.get('cvv')?.hasError('required')">
+        CVV is requerido
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Submit Button -->
+    <div class="button-container">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!paymentForm.valid">
+        Pagar
+      </button>
+      <button mat-raised-button color="primary"  (click)="goBack()" >
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>
+
+<div *ngIf="isLoading" class="loading-overlay">
+  <mat-spinner></mat-spinner>
+</div>
+<div>

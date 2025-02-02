@@ -1,0 +1,102 @@
+/* Contenedor principal */
+.payment-form-container {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Título */
+.payment-form-container h1 {
+  font-size: 50px;
+  text-align: center;
+  color: #3f51b5;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Subtitulo */
+.payment-form-container h2 {
+  text-align: center;
+  color: #3f51b5;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+/* Formulario */
+.payment-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* Estilos para los campos */
+mat-form-field {
+  display: block;
+}
+
+/* Campos de ancho completo */
+.full-width {
+  width: 100%;
+}
+
+/* Campos de medio ancho */
+.half-width {
+  width: calc(50% - 8px);
+}
+
+/* Botón */
+.button-container {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+/* Contenedor de la cuadrícula de chips */
+.chip-grid-container {
+  margin: 20px auto;
+  display: table;
+  justify-content: center;
+  /* Centra los chips horizontalmente */
+  flex-wrap: wrap;
+  gap: 16px;
+  /* Espaciado consistente entre los chips */
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  margin: 5px;
+  font-size: 18px;
+}
+
+.chip mat-icon {
+  margin-right: 5px;
+}
+
+/* Espaciado adicional entre chips y formulario */
+.chip-grid-container+.payment-form-container {
+  margin-top: 20px;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
